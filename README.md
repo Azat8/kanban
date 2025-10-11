@@ -1,19 +1,18 @@
-How to run
-For macOS / Linux
-cp .env.example .env && cp be/.env.example be/.env && cp fe/.env.example fe/.env
-docker compose up
+## How to run
+# For macOS / Linux
 
-For Windows (PowerShell or CMD)
-copy .env.example .env && copy be\.env.example be\.env && copy fe\.env.example fe\.env
-docker-compose up
+cp .env.example .env && cp be/.env.example be/.env && cp fe/.env.example fe/.env && docker compose up
 
--------------USERS-----------------
-manager 
-name: Alice Manager
-email: alice@demo.com
+# For Windows (PowerShell or CMD)
 
-employee 
-name: Charlie User
-email: charlie@demo.com
+copy .env.example .env && copy be\.env.example be\.env && copy fe\.env.example fe\.env && docker-compose up
 
-Password: Password123
+# USERS
+
+### manager 
+alice@demo.com
+
+### employee 
+charlie@demo.com
+
+### Password: Password123

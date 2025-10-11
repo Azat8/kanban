@@ -20,12 +20,13 @@
         >
           {{ errorMessage }}
         </v-alert>
+        
         <v-text-field
           v-model="title"
           label="Title"
           required
           counter
-          :disabled="isEmployee"
+          :readonly="isEmployee"
           :maxLength="50"
           hint="Max 50 chars."
         />
@@ -33,7 +34,7 @@
         <v-textarea
           v-model="description"
           label="Description"
-          :disabled="isEmployee"
+          :readonly="isEmployee"
           :maxLength="500"
           hint="Max 500 chars."
           counter
@@ -46,7 +47,7 @@
             label="Start Date & Time"
             :max="endDate || undefined"
             required
-            :disabled="isEmployee"
+            :readonly="isEmployee"
             :min="getNowDateTimeLocal()"
           />
           <v-text-field
@@ -54,7 +55,7 @@
             type="datetime-local"
             label="End Date & Time"
             required
-            :disabled="isEmployee"
+            :readonly="isEmployee"
             :min="startDate || getNowDateTimeLocal()"
           />
         </div>
@@ -67,7 +68,7 @@
           item-disabled="disabled"
           :return-object="true"
           label="Assign Employee"
-          :disabled="isEmployee || isEditMode"
+          :readonly="isEmployee || isEditMode"
           :loading="isLoading"
           hide-no-data
           hide-selected

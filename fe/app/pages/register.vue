@@ -49,10 +49,11 @@
           {{ error }}
         </v-alert>
 
-        <v-card-actions class="mt-4">
+        <v-card-actions class="mt-4 d-flex flex-column">
           <v-btn text @click="goToLogin">Already have an account?</v-btn>
           <v-spacer />
           <v-btn
+            class="mt-2"
             color="primary"
             type="submit"
             :loading="loading"

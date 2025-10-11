@@ -19,14 +19,6 @@ export class UserService {
   async register(registerUserDto: RegisterUserDto) {
     const { email, password, name, role } = registerUserDto;
 
-    // Check if user exists
-    const existingUser = await this.userRepository.findOne({
-      where: { email },
-    });
-    if (existingUser) {
-      throw new Error('User already exists');
-    }
-
     // Hash password
     const hashedPassword = await hash(password, 10);
 
@@ -40,17 +32,14 @@ export class UserService {
 
     await this.userRepository.save(newUser);
 
-    // Return user without password
-    const { password: _, ...userWithoutPassword } = newUser;
-    return userWithoutPassword;
+    return newUser;
   }
   async findEmployees(
-    startDate: string, // ISO string: 'YYYY-MM-DDTHH:MM'
-    endDate: string, // ISO string: 'YYYY-MM-DDTHH:MM'
+    startDate: string,
+    endDate: string,
     keyword?: string,
     limit = 10,
   ) {
-    // Parse as Date objects (keeps hours/minutes)
     const from = new Date(startDate);
     const to = new Date(endDate);
 

@@ -34,8 +34,8 @@ export class TaskController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.taskService.findOne(+id);
+  findOne(@Param('id') id: string, @Req() req: Request) {
+    return this.taskService.findOne(+id, req.user as User);
   }
 
   @Patch(':id')
@@ -48,7 +48,7 @@ export class TaskController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.taskService.remove(+id);
+  remove(@Param('id') id: string, @Req() req: Request) {
+    return this.taskService.remove(+id, req.user as User);
   }
 }

@@ -4,7 +4,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { Task } from './entities/task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -66,15 +66,12 @@ export class TaskService {
   }
 
   async findAll(user: User, filters: TaskFiltersDto) {
-    const query = this.taskRepository
+    let query = this.taskRepository
       .createQueryBuilder('task')
       .leftJoinAndSelect('task.assignedUser', 'assignedUser')
       .leftJoinAndSelect('task.createdBy', 'createdBy');
 
-    const currentUserColumn =
-      user.role === UserRole.employee ? 'assignedUserId' : 'createdById';
-
-    query.where(`task.${currentUserColumn} = :userId`, { userId: user.id });
+    query = this.applyAuthorizationFilter(query, user);
 
     if (filters.search) {
       query.andWhere(
@@ -111,18 +108,26 @@ export class TaskService {
     return query.getMany();
   }
 
-  async findOne(id: number) {
-    const task = await this.taskRepository.findOne({
-      where: { id },
-      relations: ['assignedUser', 'createdBy'],
-    });
-    if (!task) throw new NotFoundException('Task not found');
+  async findOne(id: number, currentUser: User): Promise<Task> {
+    let query = this.taskRepository
+      .createQueryBuilder('task')
+      .leftJoinAndSelect('task.assignedUser', 'assignedUser')
+      .leftJoinAndSelect('task.createdBy', 'createdBy')
+      .where('task.id = :id', { id });
+
+    query = this.applyAuthorizationFilter(query, currentUser);
+
+    const task = await query.getOne();
+
+    if (!task) {
+      throw new NotFoundException('Task not found');
+    }
+
     return task;
   }
 
   async update(id: number, dto: UpdateTaskDto, currentUser: User) {
-    const task = await this.findOne(id);
-    if (!task) throw new NotFoundException('Task not found');
+    const task = await this.findOne(id, currentUser);
 
     if (dto.assignedUserId && dto.assignedUserId !== task.assignedUser.id) {
       throw new ForbiddenException('Reassigning task is not allowed');
@@ -182,13 +187,33 @@ export class TaskService {
     return savedTask;
   }
 
-  async remove(id: number) {
-    const task = await this.findOne(id);
+  async remove(id: number, user: User) {
+    if (user.role !== UserRole.manager) {
+      throw new ForbiddenException('Only managers can delete tasks');
+    }
+    const task = await this.findOne(id, user);
     await this.taskRepository.remove(task);
     this.notificationsGateway.sendTaskNotification(
       task.assignedUser.id.toString(),
       `Task "${task.title}" was removed.`,
     );
     return { message: 'Task deleted successfully' };
+  }
+
+  private applyAuthorizationFilter(
+    query: SelectQueryBuilder<Task>,
+    user: User,
+  ): SelectQueryBuilder<Task> {
+    const isManager = user.role === UserRole.manager;
+
+    type TaskUserIdColumns = keyof Pick<Task, 'createdBy' | 'assignedUser'>;
+
+    const userColumn: TaskUserIdColumns = isManager
+      ? 'createdBy'
+      : 'assignedUser';
+
+    query.andWhere(`task.${userColumn}Id = :userId`, { userId: user.id });
+
+    return query;
   }
 }

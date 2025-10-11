@@ -36,14 +36,14 @@
           {{ error }}
         </v-alert>
 
-        <v-card-actions class="mt-4">
+        <v-card-actions class="mt-4 d-flex flex-column">
           <v-btn text @click="goToRegister">Don't have an account?</v-btn>
-          <v-spacer />
           <v-btn
             color="primary"
             type="submit"
             :loading="loading"
             :disabled="!valid || loading"
+            class="mt-2"
           >
             Login
           </v-btn>

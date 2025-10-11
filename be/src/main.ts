@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WsIoAdapter } from './notifications/ws-io.adapter';
 import { SeedService } from './seed/seed.service';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.use(helmet());
   app.setGlobalPrefix('api');
   const configService = app.get(ConfigService);
   const origins =

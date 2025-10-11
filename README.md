@@ -11,8 +11,12 @@ copy .env.example .env && copy be\.env.example be\.env && copy fe\.env.example f
 
 ### manager 
 alice@demo.com
+<br />
+Password123
 
 ### employee 
 charlie@demo.com
+<br />
+Password123
 
 ### Password: Password123

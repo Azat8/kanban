@@ -1,0 +1,37 @@
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    env_file:
+    - ./.env
+    volumes:
+      - mysqldata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  backend:
+    build:
+      context: ./be
+    restart: always
+    volumes:
+      - ./be:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mysql
+    ports:
+      - "3001:3001"
+
+  frontend:
+    build:
+      context: ./fe
+    restart: always
+    environment:
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./fe:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysqldata:

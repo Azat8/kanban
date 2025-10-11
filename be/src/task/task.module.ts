@@ -1,8 +1,18 @@
 import { Module } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { TaskController } from './task.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Task } from './entities/task.entity';
+import { User } from 'src/user/entities/user.entity';
+import { AvailabilityModule } from 'src/common/availability/availability.module';
+import { NotificationsModule } from 'src/notifications/notifications.module';
 
 @Module({
+  imports: [
+    TypeOrmModule.forFeature([Task, User]),
+    AvailabilityModule,
+    NotificationsModule,
+  ],
   controllers: [TaskController],
   providers: [TaskService],
 })

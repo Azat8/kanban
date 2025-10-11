@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, MinLength } from 'class-validator';
+import { UserRole } from '../entities/user.entity';
 
 export class RegisterUserDto {
   @IsNotEmpty()
@@ -9,4 +10,7 @@ export class RegisterUserDto {
 
   @MinLength(6)
   password: string;
+
+  @IsEnum(Object.values(UserRole))
+  role: UserRole;
 }

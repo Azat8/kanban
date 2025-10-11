@@ -5,9 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { BoardModule } from './board/board.module';
-import { StatusModule } from './status/status.module';
 import { TaskModule } from './task/task.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -25,10 +24,9 @@ import { TaskModule } from './task/task.module';
       synchronize: true,
     }),
     UserModule,
-    BoardModule,
-    StatusModule,
     TaskModule,
     AuthModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

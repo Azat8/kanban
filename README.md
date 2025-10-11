@@ -7,6 +7,10 @@ cp .env.example .env && cp be/.env.example be/.env && cp fe/.env.example fe/.env
 
 copy .env.example .env && copy be\.env.example be\.env && copy fe\.env.example fe\.env && docker-compose up
 
+# URL
+### FE http://localhost:3000
+### BE http://localhost:3001
+
 # USERS
 
 ### manager 

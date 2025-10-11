@@ -24,7 +24,7 @@ export class Task {
   @Column()
   title: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'text' })
   description?: string;
 
   @Column({ type: 'timestamp' })

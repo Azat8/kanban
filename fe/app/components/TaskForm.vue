@@ -24,13 +24,19 @@
           v-model="title"
           label="Title"
           required
+          counter
           :disabled="isEmployee"
+          :maxLength="50"
+          hint="Max 50 chars."
         />
 
         <v-textarea
           v-model="description"
           label="Description"
           :disabled="isEmployee"
+          :maxLength="500"
+          hint="Max 500 chars."
+          counter
         />
 
         <div class="flex gap-2">

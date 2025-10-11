@@ -1,24 +1,29 @@
 ## How to run
-# For macOS / Linux
 
-cp .env.example .env && cp be/.env.example be/.env && cp fe/.env.example fe/.env && docker compose up
+#### 1. Run Docker Desktop
+Ensure Docker Desktop is running.
 
-# For Windows (PowerShell or CMD)
+#### 2. Copy environment files and run Docker
 
-copy .env.example .env && copy be\.env.example be\.env && copy fe\.env.example fe\.env && docker-compose up
+### For macOS / Linux
+##### cp .env.example .env && cp be/.env.example be/.env && cp fe/.env.example fe/.env && docker compose up
 
-# URL
-### FE http://localhost:3000
-### BE http://localhost:3001
+### For Windows (PowerShell or CMD)
 
-# USERS
+##### copy .env.example .env && copy be\.env.example be\.env && copy fe\.env.example fe\.env && docker-compose up
 
-### manager 
+### URL
+#### FE http://localhost:3000
+#### BE http://localhost:3001
+
+### USERS
+
+#### manager 
 alice@demo.com
 <br />
 Password123
 
-### employee 
+#### employee 
 charlie@demo.com
 <br />
 Password123

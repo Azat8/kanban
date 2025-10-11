@@ -7,7 +7,7 @@
         class="d-flex min-h-0 mr-3 col-item"
       >
         <div
-          class="rounded-lg border m-3 d-flex flex-column flex-grow-1 min-h-0"
+          class="rounded-lg border m-3 d-flex flex-column flex-grow-1 min-h-0 w-100"
         >
           <div
             class="pa-3 font-weight-medium sticky-header rounded-lg bg-white d-flex justify-space-between align-items-center"
@@ -46,7 +46,7 @@
 
                     <v-card-text class="text-body-2">
                       <div class="mb-2">
-                        <div>{{ element.description || '—' }}</div>
+                        <div class="description-truncate">{{ element.description || '—' }}</div>
                       </div>
 
                       <div class="mb-1">
@@ -149,6 +149,7 @@ async function onDragEnd(evt: any, newStatus: TaskStatus) {
 }
 
 .col-item {
+  max-width: 250px;
   width: 250px;
   scroll-snap-align: start;
 }
@@ -156,6 +157,7 @@ async function onDragEnd(evt: any, newStatus: TaskStatus) {
 @media only screen and (max-width: 480px) {
   .col-item {
     width: 80vw;
+    max-width: 80vw;
     scroll-snap-align: start;
   }
 }
@@ -170,5 +172,12 @@ async function onDragEnd(evt: any, newStatus: TaskStatus) {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.description-truncate {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
 }
 </style>

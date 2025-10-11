@@ -8,7 +8,6 @@ export default defineNuxtRouteMiddleware((to) => {
     auth.isAuthenticated &&
     (to.path === '/login' || to.path === '/register')
   ) {
-    alert(auth.isAuthenticated);
     return navigateTo('/');
   }
 

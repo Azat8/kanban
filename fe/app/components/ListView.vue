@@ -36,7 +36,7 @@
       {{ formatDate(item.endDate) }}
     </template>
 
-    <template v-slot:item.actions="{ item }" v-if="!isEmployee">
+    <template v-slot:item.actions="{ item }">
       <v-btn
         icon="mdi-pencil"
         size="small"
@@ -47,6 +47,7 @@
       ></v-btn>
       
       <v-btn
+        v-if="!isEmployee"
         icon="mdi-delete"
         size="small"
         color="error"

@@ -6,7 +6,11 @@ Ensure Docker Desktop is running.
 #### 2. Copy environment files and run Docker
 
 ### For macOS / Linux
-##### cp .env.example .env && cp be/.env.example be/.env && cp fe/.env.example fe/.env && docker compose up
+##### 
+cp .env.example .env
+cp be/.env.example be/.env
+cp fe/.env.example fe/.env
+docker compose up
 
 ### For Windows (PowerShell or CMD)
 
